@@ -40,7 +40,7 @@ This Blender add-on exports bone animation data to CSV format.
 - Default uses the full animation range
 
 ### Coordinate System
-- **Normalize to [-1, 1]**: Best for Pd-L2Ork integration
+- **Normalize to [-1, 1]**: Best for further processing
 - **World Coordinates**: Raw position and rotation values
 
 ### Advanced Options
@@ -50,21 +50,21 @@ This Blender add-on exports bone animation data to CSV format.
 ## CSV Format
 
 For a single bone export:
-```
-frame,pos_x,pos_y,pos_z,rot_x,rot_y,rot_z
-1,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000
-2,0.125631,0.098452,-0.045812,0.023599,0.000000,0.001571
-3,0.261242,0.196904,-0.091623,0.047198,0.003142,0.003142
-...
-```
+
+| frame | pos_x     | pos_y     | pos_z      | rot_x     | rot_y     | rot_z     |
+|-------|-----------|-----------|------------|-----------|-----------|-----------|
+| 1     | 0.000000  | 0.000000  | 0.000000   | 0.000000  | 0.000000  | 0.000000  |
+| 2     | 0.125631  | 0.098452  | -0.045812  | 0.023599  | 0.000000  | 0.001571  |
+| 3     | 0.261242  | 0.196904  | -0.091623  | 0.047198  | 0.003142  | 0.003142  |
+| ...   | ...       | ...       | ...        | ...       | ...       | ...       |
 
 For multiple bones export:
-```
-frame,Hips_pos_x,Hips_pos_y,Hips_pos_z,Hips_rot_x,Hips_rot_y,Hips_rot_z,Spine_pos_x,...
-1,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,...
-2,0.125631,0.098452,-0.045812,0.023599,0.000000,0.001571,0.129842,...
-...
-```
+
+| frame | Hips_pos_x | Hips_pos_y | Hips_pos_z | Hips_rot_x | Hips_rot_y | Hips_rot_z | Spine_pos_x | ... |
+|-------|------------|------------|------------|------------|------------|------------|-------------|-----|
+| 1     | 0.000000   | 0.000000   | 0.000000   | 0.000000   | 0.000000   | 0.000000   | 0.000000    | ... |
+| 2     | 0.125631   | 0.098452   | -0.045812  | 0.023599   | 0.000000   | 0.001571   | 0.129842    | ... |
+| ...   | ...        | ...        | ...        | ...        | ...        | ...        | ...         | ... |
 
 ## Troubleshooting
 
