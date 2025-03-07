@@ -2,6 +2,7 @@
 Part of the *informatic flows* series by electro-cute-angels ❦
 
 This Blender add-on exports bone animation data to CSV format.
+
 <img width="1512" alt="blender-electro-cute-screenshot" src="https://github.com/user-attachments/assets/a89dcfd0-3baa-49ef-86eb-0f47da0ad7b7" />
 
 ## Features
