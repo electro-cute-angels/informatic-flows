@@ -1,6 +1,6 @@
 # ✿˚* Bone Animation Data Exporter for Blender *˚☾
 
-Part of the *informatic flows* series by electro-cute-angels
+Part of the *informatic flows* series by electro-cute-angels❦
 
 This Blender add-on exports bone animation data to CSV format for use with Pd-L2Ork or other applications.
 
