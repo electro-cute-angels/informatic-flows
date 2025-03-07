@@ -74,7 +74,7 @@ frame,Hips_pos_x,Hips_pos_y,Hips_pos_z,Hips_rot_x,Hips_rot_y,Hips_rot_z,Spine_po
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
 
 ---
 
