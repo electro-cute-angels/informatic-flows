@@ -1,4 +1,4 @@
-# ✿˚* Bones Animation Data Exporter for Blender *˚☾
+# ✿˚* Bone Animation Data Exporter for Blender *˚☾
 
 Part of the *informatic flows* series by electro-cute-angels
 
