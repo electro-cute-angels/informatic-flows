@@ -70,7 +70,6 @@ frame,Hips_pos_x,Hips_pos_y,Hips_pos_z,Hips_rot_x,Hips_rot_y,Hips_rot_z,Spine_po
 
 - If no bones appear in the dropdown, ensure your armature has bones and is properly rigged
 - If the exported CSV contains unchanging values, check that your animation actually moves the selected bone
-- For optimal results, use animations with clear, distinct movements
 - Large files may take longer to process - use the Frame Step option to reduce file size
 
 ## License
