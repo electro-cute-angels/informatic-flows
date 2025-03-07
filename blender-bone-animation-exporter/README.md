@@ -20,14 +20,14 @@ This Blender add-on exports bone animation data to CSV format.
 
 ## Usage
 
-1. Select an armature in the 3D viewport
-2. Go to File → Export → Bone Animation to CSV
-3. Configure export options:
+[01]. Select an armature in the 3D viewport
+[02]. Go to File → Export → Bone Animation to CSV
+[03]. Configure export options:
    - Choose which bone to export
    - Set frame range
    - Select coordinate system
    - Adjust precision and sampling rate
-4. Click "Export" to save the CSV file
+[04]. Click "Export" to save the CSV file
 
 ## Options Explained
 
