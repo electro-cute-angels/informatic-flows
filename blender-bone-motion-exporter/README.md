@@ -2,7 +2,9 @@
 **This Blender add-on exports bone motion data to CSV format.**
 
 Part of the *informatic flows* series by electro-cute-angels ❦
+
 ![screenshot-motion-data-exporter-compressed](https://github.com/user-attachments/assets/c400df5c-8929-4fb9-941c-5769040591dd)
+
 ## Features
 
 - Export motion data from any bone in an armature
