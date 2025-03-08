@@ -73,10 +73,10 @@ For multiple bones export:
 - If the exported CSV contains unchanging values, check that your animation actually moves the selected bone
 - Large files may take longer to process - use the Frame Step option to reduce file size
 
-## Possible Use Cases
+## Possible Use Cases / Workflows
 
 - Generative music in Pure Data
-- ..more use cases soon
+- .. more use cases soon
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
