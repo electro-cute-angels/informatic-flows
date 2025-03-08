@@ -7,22 +7,22 @@ Part of the *informatic flows* series by electro-cute-angels ❦
 
 ## Features
 
-- Export animation data from any bone in an armature
+- Export motion data from any bone in an armature
 - Choose between normalized [-1, 1] values or world-space coordinates
 - Select custom frame ranges and sampling rates
 - Export single bones or all bones in an armature
 
 ## Installation
 
-1. Download `bone_animation_exporter.py` from this repository
+1. Download `bone_motion_exporter.py` from this repository
 2. Open Blender and go to Edit → Preferences → Add-ons
 3. Click "Install..." and select the downloaded file
-4. Enable the add-on by checking the box next to "Import-Export: Animation to CSV Exporter"
+4. Enable the add-on by checking the box next to "Import-Export: Bone Motion to CSV Exporter"
 
 ## Usage
 
 01. Select an armature in the 3D viewport
-02. Go to File → Export → Bone Animation to CSV
+02. Go to File → Export → Bone Motion to CSV
 03. Configure export options:
    - Choose which bone to export
    - Set frame range
