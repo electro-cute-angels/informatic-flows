@@ -1,4 +1,4 @@
-# Bone Animation Data Exporter for Blender
+# Bone Motion Data Exporter for Blender
 **This Blender add-on exports bone animation data to CSV format.**
 
 Part of the *informatic flows* series by electro-cute-angels ❦
