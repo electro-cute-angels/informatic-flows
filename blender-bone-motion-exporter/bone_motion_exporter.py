@@ -1,10 +1,10 @@
 bl_info = {
-    "name": "Bone Motion to CSV Exporter",
+    "name": "Bone Motion Data Exporter",
     "author": "electro-cute-angels",
-    "version": (1, 0),
+    "version": (1, 1),
     "blender": (2, 80, 0),
-    "location": "File > Export > Bone Motion to CSV",
-    "description": "Export bone motion data to CSV - part of 'informatic flows' series",
+    "location": "File > Export > Bone Motion Data",
+    "description": "Export bone motion data to CSV/JSON - part of 'informatic flows' series",
     "warning": "",
     "doc_url": "",
     "category": "Import-Export",
@@ -12,6 +12,7 @@ bl_info = {
 
 import bpy
 import csv
+import json
 import os
 from bpy_extras.io_utils import ExportHelper
 from bpy.props import StringProperty, EnumProperty, BoolProperty, IntProperty, FloatProperty
@@ -32,7 +33,7 @@ def get_bones_callback(self, context):
                 f"Export motion from bone: {bone.name}"
             ))
     
-    items.insert(0, ("ALL", "All Bones", "Export motion from all bones (will create a wider CSV with multiple columns)"))
+    items.insert(0, ("ALL", "All Bones", "Export motion from all bones (will create a wider data structure)"))
     
     if len(items) == 1:
         items.append(("NONE", "No Bones Found", "No bones found in the active armature"))
@@ -46,16 +47,29 @@ def get_animation_range(context):
         return (int(frame_range[0]), int(frame_range[1]))
     return (1, 250)
 
-class BONE_OT_export_animation_csv(Operator, ExportHelper):
-    bl_idname = "export.bone_animation_csv"
-    bl_label = "Export Bone Motion to CSV"
+class BONE_OT_export_motion_data(Operator, ExportHelper):
+    bl_idname = "export.bone_motion_data"
+    bl_label = "Export Bone Motion Data"
     
-    filename_ext = ".csv"
+    filename_ext = StringProperty(
+        default=".csv",
+        options={'HIDDEN'}
+    )
     
     filter_glob: StringProperty(
-        default="*.csv",
+        default="*.csv;*.json",
         options={'HIDDEN'},
         maxlen=255,
+    )
+    
+    export_format: EnumProperty(
+        name="Format",
+        description="Choose the export format",
+        items=(
+            ('CSV', "CSV", "Comma-separated values format"),
+            ('JSON', "JSON", "JavaScript Object Notation format")
+        ),
+        default='CSV'
     )
     
     show_hidden_bones: BoolProperty(
@@ -122,10 +136,18 @@ class BONE_OT_export_animation_csv(Operator, ExportHelper):
     )
     
     def invoke(self, context, event):
+        self.update_extension(context)
+        
         start, end = get_animation_range(context)
         self.start_frame = start
         self.end_frame = end
         return super().invoke(context, event)
+    
+    def update_extension(self, context):
+        if self.export_format == 'CSV':
+            self.filename_ext = ".csv"
+        elif self.export_format == 'JSON':
+            self.filename_ext = ".json"
     
     def draw(self, context):
         layout = self.layout
@@ -134,13 +156,16 @@ class BONE_OT_export_animation_csv(Operator, ExportHelper):
         box.label(text="Bone Motion Exporter ❦")
         
         box = layout.box()
+        box.label(text="Export Format:")
+        box.prop(self, "export_format", expand=True)
+        
+        box = layout.box()
         box.label(text="Bone Selection:")
         box.prop(self, "show_hidden_bones")
         box.prop(self, "bone_to_export")
         
         if self.bone_to_export == "ALL":
-            box.label(text="Note: Exporting all bones will create a wide CSV", icon='INFO')
-            box.label(text="with multiple columns for each bone.")
+            box.label(text="Note: Exporting all bones will create a wider data structure", icon='INFO')
         
         box = layout.box()
         box.label(text="Frame Range:")
@@ -163,6 +188,12 @@ class BONE_OT_export_animation_csv(Operator, ExportHelper):
         row.prop(self, "precision")
     
     def execute(self, context):
+        self.update_extension(context)
+        
+        filepath = self.filepath
+        if not filepath.endswith(self.filename_ext):
+            filepath += self.filename_ext
+        
         obj = context.active_object
         if not obj or obj.type != 'ARMATURE':
             self.report({'ERROR'}, "Active object must be an armature")
@@ -257,93 +288,180 @@ class BONE_OT_export_animation_csv(Operator, ExportHelper):
                 }
         
         try:
-            with open(self.filepath, 'w', newline='') as csvfile:
-                writer = csv.writer(csvfile)
-                
-                if len(bones_to_export) == 1:
-                    writer.writerow(["frame", "pos_x", "pos_y", "pos_z", "rot_x", "rot_y", "rot_z"])
-                else:
-                    header = ["frame"]
-                    for bone in bones_to_export:
-                        for suffix in ["pos_x", "pos_y", "pos_z", "rot_x", "rot_y", "rot_z"]:
-                            header.append(f"{bone.name}_{suffix}")
-                    writer.writerow(header)
-                
-                changed_values = 0
-                last_values = None
-                
-                for frame in frames_to_sample:
-                    context.scene.frame_set(frame)
-                    context.view_layer.update()
-                    
-                    row_data = [frame]
-                    all_raw_values = []
-                    
-                    for bone in bones_to_export:
-                        bone_matrix = obj.matrix_world @ bone.matrix
-                        
-                        loc = bone_matrix.to_translation()
-                        rot = bone_matrix.to_euler()
-                        
-                        raw_values = [loc.x, loc.y, loc.z, rot.x, rot.y, rot.z]
-                        all_raw_values.extend(raw_values)
-                        
-                        if self.coordinate_system == 'WORLD':
-                            for v in raw_values:
-                                row_data.append(round(v, self.precision))
-                        else:
-                            min_pos = bone_data[bone.name]['min_pos']
-                            max_pos = bone_data[bone.name]['max_pos']
-                            min_rot = bone_data[bone.name]['min_rot']
-                            max_rot = bone_data[bone.name]['max_rot']
-                            
-                            norm_pos = [
-                                2.0 * (loc.x - min_pos[0]) / (max_pos[0] - min_pos[0]) - 1.0,
-                                2.0 * (loc.y - min_pos[1]) / (max_pos[1] - min_pos[1]) - 1.0,
-                                2.0 * (loc.z - min_pos[2]) / (max_pos[2] - min_pos[2]) - 1.0
-                            ]
-                            
-                            norm_rot = [
-                                2.0 * (rot.x - min_rot[0]) / (max_rot[0] - min_rot[0]) - 1.0,
-                                2.0 * (rot.y - min_rot[1]) / (max_rot[1] - min_rot[1]) - 1.0,
-                                2.0 * (rot.z - min_rot[2]) / (max_rot[2] - min_rot[2]) - 1.0
-                            ]
-                            
-                            norm_pos = [max(-1.0, min(1.0, v)) for v in norm_pos]
-                            norm_rot = [max(-1.0, min(1.0, v)) for v in norm_rot]
-                            
-                            for v in norm_pos + norm_rot:
-                                row_data.append(round(v, self.precision))
-                    
-                    if last_values:
-                        has_changed = any(abs(a - b) > 0.0001 for a, b in zip(all_raw_values, last_values))
-                        if has_changed:
-                            changed_values += 1
-                    else:
-                        changed_values += 1
-                    
-                    last_values = all_raw_values
-                    
-                    writer.writerow(row_data)
+            animation_data = []
+            frames_data = {}
             
-            self.report({'INFO'}, f"Motion data exported to: {self.filepath}")
+            for frame in frames_to_sample:
+                context.scene.frame_set(frame)
+                context.view_layer.update()
+                
+                frame_data = {"frame": frame}
+                frame_bones_data = {}
+                
+                for bone in bones_to_export:
+                    bone_matrix = obj.matrix_world @ bone.matrix
+                    
+                    loc = bone_matrix.to_translation()
+                    rot = bone_matrix.to_euler()
+                    
+                    if self.coordinate_system == 'WORLD':
+                        bone_values = {
+                            "position": {
+                                "x": round(loc.x, self.precision),
+                                "y": round(loc.y, self.precision),
+                                "z": round(loc.z, self.precision)
+                            },
+                            "rotation": {
+                                "x": round(rot.x, self.precision),
+                                "y": round(rot.y, self.precision),
+                                "z": round(rot.z, self.precision)
+                            }
+                        }
+                    else:  # NORMALIZED
+                        min_pos = bone_data[bone.name]['min_pos']
+                        max_pos = bone_data[bone.name]['max_pos']
+                        min_rot = bone_data[bone.name]['min_rot']
+                        max_rot = bone_data[bone.name]['max_rot']
+                        
+                        norm_pos = [
+                            2.0 * (loc.x - min_pos[0]) / (max_pos[0] - min_pos[0]) - 1.0,
+                            2.0 * (loc.y - min_pos[1]) / (max_pos[1] - min_pos[1]) - 1.0,
+                            2.0 * (loc.z - min_pos[2]) / (max_pos[2] - min_pos[2]) - 1.0
+                        ]
+                        
+                        norm_rot = [
+                            2.0 * (rot.x - min_rot[0]) / (max_rot[0] - min_rot[0]) - 1.0,
+                            2.0 * (rot.y - min_rot[1]) / (max_rot[1] - min_rot[1]) - 1.0,
+                            2.0 * (rot.z - min_rot[2]) / (max_rot[2] - min_rot[2]) - 1.0
+                        ]
+                        
+                        norm_pos = [max(-1.0, min(1.0, v)) for v in norm_pos]
+                        norm_rot = [max(-1.0, min(1.0, v)) for v in norm_rot]
+                        
+                        bone_values = {
+                            "position": {
+                                "x": round(norm_pos[0], self.precision),
+                                "y": round(norm_pos[1], self.precision),
+                                "z": round(norm_pos[2], self.precision)
+                            },
+                            "rotation": {
+                                "x": round(norm_rot[0], self.precision),
+                                "y": round(norm_rot[1], self.precision),
+                                "z": round(norm_rot[2], self.precision)
+                            }
+                        }
+                    
+                    if self.export_format == 'CSV':
+                        if len(bones_to_export) == 1:
+                            frame_data["pos_x"] = bone_values["position"]["x"]
+                            frame_data["pos_y"] = bone_values["position"]["y"]
+                            frame_data["pos_z"] = bone_values["position"]["z"]
+                            frame_data["rot_x"] = bone_values["rotation"]["x"]
+                            frame_data["rot_y"] = bone_values["rotation"]["y"]
+                            frame_data["rot_z"] = bone_values["rotation"]["z"]
+                        else:
+                            frame_data[f"{bone.name}_pos_x"] = bone_values["position"]["x"]
+                            frame_data[f"{bone.name}_pos_y"] = bone_values["position"]["y"]
+                            frame_data[f"{bone.name}_pos_z"] = bone_values["position"]["z"]
+                            frame_data[f"{bone.name}_rot_x"] = bone_values["rotation"]["x"]
+                            frame_data[f"{bone.name}_rot_y"] = bone_values["rotation"]["y"]
+                            frame_data[f"{bone.name}_rot_z"] = bone_values["rotation"]["z"]
+                    
+                    frame_bones_data[bone.name] = bone_values
+                
+                if self.export_format == 'JSON':
+                    frames_data[str(frame)] = frame_bones_data
+                else:  
+                    animation_data.append(frame_data)
+            
+            if self.export_format == 'CSV':
+                self.export_csv(filepath, animation_data)
+            elif self.export_format == 'JSON':
+                self.export_json(filepath, frames_data)
+            
+            self.report({'INFO'}, f"Motion data exported to: {filepath}")
             
             context.scene.frame_set(original_frame)
             
             return {'FINISHED'}
             
         except Exception as e:
-            self.report({'ERROR'}, f"Error writing CSV file: {str(e)}")
+            self.report({'ERROR'}, f"Error writing file: {str(e)}")
             
             context.scene.frame_set(original_frame)
             
             return {'CANCELLED'}
+    
+    def export_csv(self, filepath, animation_data):
+        with open(filepath, 'w', newline='') as csvfile:
+            if animation_data:
+                fieldnames = animation_data[0].keys()
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(animation_data)
+    
+    def export_json(self, filepath, frames_data):
+        first_frame = next(iter(frames_data.values()))
+        bone_names = list(first_frame.keys())
+        
+        # Analyze bone hierarchy
+        obj = bpy.context.active_object
+        bone_groups = {}
+        
+        for bone_name in bone_names:
+            if bone_name in obj.pose.bones:
+                bone = obj.pose.bones[bone_name]
+                
+                # Try to determine bone type from name
+                bone_type = "other"
+                name_lower = bone_name.lower()
+                
+                if "arm" in name_lower or "hand" in name_lower or "finger" in name_lower or "thumb" in name_lower:
+                    bone_type = "arm"
+                elif "leg" in name_lower or "foot" in name_lower or "toe" in name_lower:
+                    bone_type = "leg"
+                elif "spine" in name_lower or "neck" in name_lower:
+                    bone_type = "spine"
+                elif "head" in name_lower or "face" in name_lower or "jaw" in name_lower:
+                    bone_type = "head"
+                elif "hip" in name_lower or "pelvis" in name_lower:
+                    bone_type = "hip"
+                
+                if bone_type not in bone_groups:
+                    bone_groups[bone_type] = []
+                bone_groups[bone_type].append(bone_name)
+        
+        bones_data = {}
+        for bone_type, bones in bone_groups.items():
+            bones_data[bone_type] = {}
+            for bone_name in bones:
+                bones_data[bone_type][bone_name] = {
+                    "frames": {}
+                }
+                for frame, frame_data in frames_data.items():
+                    if bone_name in frame_data:
+                        bones_data[bone_type][bone_name]["frames"][frame] = frame_data[bone_name]
+        
+        organized_data = {
+            "metadata": {
+                "format": "bone motion data in by frame and by bone type",
+                "coordinate_system": self.coordinate_system.lower(),
+                "frame_count": len(frames_data),
+                "bone_count": len(bone_names),
+                "frame_range": [int(min(frames_data.keys())), int(max(frames_data.keys()))]
+            },
+            "by_frame": frames_data,
+            "by_bone_type": bones_data
+        }
+        
+        with open(filepath, 'w') as jsonfile:
+            json.dump(organized_data, jsonfile, indent=2)
 
 def menu_func_export(self, context):
-    self.layout.operator(BONE_OT_export_animation_csv.bl_idname, text="Bone Motion to .CSV")
+    self.layout.operator(BONE_OT_export_motion_data.bl_idname, text="Bone Motion Data")
 
 classes = (
-    BONE_OT_export_animation_csv,
+    BONE_OT_export_motion_data,
 )
 
 def register():
