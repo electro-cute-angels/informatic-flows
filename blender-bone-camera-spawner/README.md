@@ -1,5 +1,5 @@
 # Bone Camera Spawner for Blender
-**This Blender add-on creates cameras targeting bones with advanced positioning options.**
+**This Blender add-on spawn cameras and target bones with advanced positioning options.**
 Part of the *informatic flows* series by electro-cute-angels ❦
 
 [![License](https://img.shields.io/npm/l/mithril.svg)](https://github.com/MithrilJS/mithril.js/blob/main/LICENSE) &nbsp;
