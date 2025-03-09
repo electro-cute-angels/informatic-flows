@@ -1,5 +1,5 @@
 # Bone Media Spawner for Blender
-**This Blender add-on places images and videos on planes that follow bones with advanced positioning options.**
+**This Blender add-on spawn images from bones with advanced positioning and tracking options**
 Part of the *informatic flows* series by electro-cute-angels ❦
 
 [![License](https://img.shields.io/npm/l/mithril.svg)](https://github.com/MithrilJS/mithril.js/blob/main/LICENSE) &nbsp;
