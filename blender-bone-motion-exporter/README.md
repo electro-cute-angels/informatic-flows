@@ -1,5 +1,5 @@
 # Bone Motion Exporter for Blender
-**This Blender add-on exports bone motion data to CSV and JSON formats.**
+**This Blender add-on exports bone motion data to .CSV and .JSON formats.**
 Part of the *informatic flows* series by electro-cute-angels ❦
 [![License](https://img.shields.io/npm/l/mithril.svg)](https://github.com/MithrilJS/mithril.js/blob/main/LICENSE) &nbsp;
 [![Version](https://img.shields.io/badge/version-1.1-blue)](https://shields.io/) &nbsp;
@@ -68,7 +68,7 @@ For multiple bones export:
 | 2     | 0.125631   | 0.098452   | -0.045812  | 0.023599   | 0.000000   | 0.001571   | 0.129842    | ... |
 | ...   | ...        | ...        | ...        | ...        | ...        | ...        | ...         | ... |
 
-## JSON Format (New in v1.1)
+## JSON Format [!New in v1.1]
 The JSON export organizes data in a structured format with three main sections:
 
 ### 1. Metadata
@@ -127,9 +127,9 @@ Data organized by anatomical region, making it easy to work with related bones:
 - Large files may take longer to process - use the Frame Step option to reduce file size
 
 ## Possible Use Cases / Workflows
-- Generative music in Pure Data
-- Web-based animations
-- ML model training
+- [ML] Build your own training set
+- [PCG] Procedural content generation in Pure Data
+- [WebGL] Build complex vertex and fragment shaders
 - .. more use cases soon
 
 ## License
