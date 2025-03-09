@@ -10,7 +10,7 @@ Part of the *informatic flows* series by electro-cute-angels ❦
 - Create cameras targeting any bone in an armature
 - Configure camera type (perspective or orthographic)
 - Multiple positioning options:
-  - First-person view attached to bones
+  - Bone perspective (camera spawning from the bone)
   - Angled, perpendicular, or aligned to specific axes
   - Random positioning around bones
   - Custom fixed positions
