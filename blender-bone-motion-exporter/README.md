@@ -129,7 +129,7 @@ Data organized by anatomical region, making it easy to work with related bones:
 ## Possible Use Cases / Workflows
 - [ML] Build your own training set
 - [PCG] Procedural content generation in Pure Data
-- [WebGL] Build complex vertex and fragment shaders
+- [WebGL] Build vertex and fragment shaders
 - .. more use cases soon
 
 ## License
