@@ -1,3 +1,4 @@
+# ❦ ˚`✵ electro-cute-angels ✵´˚ ❦
 bl_info = {
     "name": "Bone Camera Spawner",
     "author": "electro-cute-angels",
@@ -541,3 +542,4 @@ def unregister():
 
 if __name__ == "__main__":
     register()
+# ❦ ˚`✵ electro-cute-angels ✵´˚ ❦
