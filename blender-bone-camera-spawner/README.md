@@ -1,10 +1,10 @@
 # Bone Camera Spawner for Blender
 **This Blender add-on creates cameras targeting bones with advanced positioning options.**
 Part of the *informatic flows* series by electro-cute-angels ❦
+
 [![License](https://img.shields.io/npm/l/mithril.svg)](https://github.com/MithrilJS/mithril.js/blob/main/LICENSE) &nbsp;
 [![Version](https://img.shields.io/badge/version-1.0-blue)](https://shields.io/) &nbsp;
 ![Static Badge](https://img.shields.io/badge/addon-blender-b?logo=addon&logoColor=%23ffff00&label=addon&color=ff00ff)
-![screenshot-bone-camera-spawner-compressed](https://github.com/user-attachments/assets/placeholder-image-id)
 
 ## Features
 - Create cameras targeting any bone in an armature
