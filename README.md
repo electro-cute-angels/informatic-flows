@@ -5,4 +5,5 @@ Lubricants for your pleasure.
 
 ## Tools in this collection:
 - [Bone Camera Spawner for Blender](./blender-bone-camera-spawner) - Spawn cameras and target bones with advanced positioning options
+- [Bone Image Spawner for Blender](./blender-bone-image-spawner) - Spawn images from bones with advanced positioning options
 - [Bone Motion Exporter for Blender](./blender-bone-motion-exporter) - Export bone motion data to .JSON and .CSV format [.fbx > .json / .fbx > .csv]
