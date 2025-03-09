@@ -128,8 +128,8 @@ Data organized by anatomical region, making it easy to work with related bones:
 
 ## Possible Use Cases / Workflows
 - Generative music in Pure Data
-- Web-based animation visualization (using JSON format)
-- Machine learning on movement patterns
+- Web-based animations
+- ML model training
 - .. more use cases soon
 
 ## License
