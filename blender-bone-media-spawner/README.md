@@ -85,16 +85,9 @@ You can assign media to bones in two ways:
 ## Troubleshooting
 - If no media files appear in the list, make sure your folder contains supported file formats
 - If media planes are too large or small, adjust the Scale Factor
-- For videos that don't play, make sure they use supported codecs (H.264 recommended)
-- If media planes don't follow bones correctly, try different position settings
-- If media planes flicker or behave oddly, try changing the distance or using custom position
 
 ## Possible Use Cases / Workflows
-- [VFX] Attach screens or projections to characters or objects
-- [Visualization] Display bone data as textures during animation
-- [Motion Graphics] Create dynamic text that follows character movement
-- [Storyboarding] Attach reference images to character rigs
-- [Animation] Visualize character thoughts or speech as animated text/images
+[..]
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
