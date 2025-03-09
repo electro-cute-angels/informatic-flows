@@ -5,6 +5,7 @@ Part of the *informatic flows* series by electro-cute-angels ❦
 [![License](https://img.shields.io/npm/l/mithril.svg)](https://github.com/MithrilJS/mithril.js/blob/main/LICENSE) &nbsp;
 [![Version](https://img.shields.io/badge/version-1.0-blue)](https://shields.io/) &nbsp;
 ![Static Badge](https://img.shields.io/badge/addon-blender-b?logo=addon&logoColor=%23ffff00&label=addon&color=ff00ff)
+<img width="1512" alt="Screenshot 2025-03-09 at 19 46 44-min" src="https://github.com/user-attachments/assets/6da4c9b4-9d1f-46c6-a8db-583804517d35" />
 
 ## Features
 - Create cameras targeting any bone in an armature
