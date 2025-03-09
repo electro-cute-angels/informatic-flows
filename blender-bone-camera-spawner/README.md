@@ -65,15 +65,14 @@ After creating cameras, they'll appear in the "Camera Navigation" section of the
 - If the panel doesn't appear, ensure an armature is selected in the viewport
 - If cameras seem too close or too far from bones, adjust the Camera Distance value
 - For small armatures, you might need to reduce the camera's clip start value
-- For first-person views that appear flipped, try changing the attachment point
 
 ## Possible Use Cases / Workflows
-- [Animation] Create dramatic camera angles for character animations
-- [Rendering] Set up multiple camera views for batch rendering
-- [Mocap] Visualize motion capture data from different perspectives
 - [Rigging] Test bone constraints and IK chains from optimal viewpoints
-
+- [Animation] Spawn dramatic camera angles
+- [Rendering] Set up multiple camera views for batch rendering
+- [MoCap] Visualize motion capture data from different perspectives
+  
 ## License
-This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
----
+**This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.**
+
 electro-cute-angels ❦
