@@ -1,7 +1,5 @@
 # informatic flows
-A collection of tools by electro-cute-angels❦ 
-
-Lubricants for your pleasure.
+A collection of tools by electro-cute-angels❦ Lubricants for your pleasure.
 
 ## Tools in this collection:
 - [Bone Camera Spawner for Blender](./blender-bone-camera-spawner) - Spawn cameras and target bones with advanced positioning options
