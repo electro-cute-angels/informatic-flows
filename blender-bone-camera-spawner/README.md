@@ -15,7 +15,6 @@ Part of the *informatic flows* series by electro-cute-angels ❦
   - Random positioning around bones
   - Custom fixed positions
 - Easily switch between bone cameras in the viewport
-- Automatically scales camera parameters based on bone size
 - Creates organized camera collections in the scene
 
 ## Installation
@@ -42,7 +41,7 @@ Part of the *informatic flows* series by electro-cute-angels ❦
 - **Ortho Scale**: View size for orthographic cameras
 
 ### Camera Position
-- **Bone Perspective**: First-person view from the bone's perspective
+- **Bone Perspective**: View from the bone's perspective
   - **Attach to**: Choose head (start), tail (end), or middle of bone
 - **Position Type**: How to place the camera relative to the bone
   - **Angled**: Default position at an angle to the bone
