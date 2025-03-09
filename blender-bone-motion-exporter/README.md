@@ -74,7 +74,7 @@ The JSON export organizes data in a structured format with three main sections:
 ### 1. Metadata
 ```json
 "metadata": {
-  "format": "electro-cute-angels bone motion data",
+  "format": "bone motion data by frame and by bone type",
   "coordinate_system": "normalized",
   "frame_count": 250,
   "bone_count": 32,
